@@ -7,7 +7,9 @@ import java.util.Random;
 
 public class Message {
 
-    private String messageDateTime, messageID, actionDateTime;
+    private final String messageDateTime;
+    private final String messageID;
+    private final String actionDateTime;
 
     public Message() {
         String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
