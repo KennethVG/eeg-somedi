@@ -2,6 +2,8 @@ package be.somedi.eeg.domain;
 
 import be.somedi.eeg.entity.Person;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -31,6 +33,7 @@ public class XMLCreator {
 	private Document document;
 
 	private static final int SIZE_BIRTHDATE = 11;
+	private static final Logger LOGGER = LoggerFactory.getLogger(XMLCreator.class);
 
 	@Value("${path-write}")
 	private Path pathToWrite;
@@ -42,9 +45,9 @@ public class XMLCreator {
 	}
 
 	private void writeToXml(Person patient) {
-		System.out.println("Patiënt to write: " + patient);
+		LOGGER.info("Patiënt to write: " + patient);
 		if (patient.getInss() != null) {
-			System.out.println("Verwerken naar een XML...");
+			LOGGER.info("Creatint XML...");
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer;
 			try {
@@ -61,7 +64,7 @@ public class XMLCreator {
 
 			} catch (TransformerException e) {
 				try {
-					System.out.println("Error: " + e.getMessage());
+					LOGGER.error("Error creating XML", e);
 					Files.write(pathToError, e.getMessage().getBytes());
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -159,14 +162,12 @@ public class XMLCreator {
 			Element receiver = document.createElement("Receiver");
 			letter.appendChild(receiver);
 			Element INSSr = document.createElement("INSS");
-			// INSS van Pqtrick Vermylen
+			// INSS van Patrick Vermylen
 			INSSr.appendChild(document.createTextNode("71060921974"));
 			receiver.appendChild(INSSr);
 			Element link = document.createElement("Link");
 			link.appendChild(document.createTextNode(patient.getUrlToPDF().replaceAll("\n", "")));
 			letter.appendChild(link);
-
-			System.out.println(patient);
 
 			// Write the content into xml file
 			writeToXml(patient);

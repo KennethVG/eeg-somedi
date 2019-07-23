@@ -20,24 +20,12 @@ public class Message {
         return messageDateTime;
     }
 
-    public void setMessageDateTime(String messageDateTime) {
-        this.messageDateTime = messageDateTime;
-    }
-
     public String getMessageID() {
         return messageID;
     }
 
-    public void setMessageID(String messageID) {
-        this.messageID = messageID;
-    }
-
     public String getActionDateTime() {
         return actionDateTime;
-    }
-
-    public void setActionDateTime(String actionDateTime) {
-        this.actionDateTime = actionDateTime;
     }
 
     @Override

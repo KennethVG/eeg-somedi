@@ -48,9 +48,11 @@ public class EEGReader {
                     .filter(path -> StringUtils.endsWith(path.toString(), ".pdf"))
                     .map(path -> {
                         Person patient = null;
+                        final String pathName = path.getFileName().toString().trim();
                         try {
-                            patient = personService.findByInss(StringUtils.left(path.getFileName().toString(), SIZE_INSS));
+                            patient = personService.findByInss(StringUtils.left(pathName, SIZE_INSS));
                             if(patient == null){
+                                LOGGER.error("PDF zonder INSS of zonder gekende INSS" + pathName);
                                 Files.copy(path, Paths.get(pathToError +"\\" + path.getFileName()), StandardCopyOption.REPLACE_EXISTING);
                             } else {
                                 Path toPath = Paths.get(pathToRead + backUpPdf(path));
