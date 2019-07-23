@@ -52,7 +52,7 @@ public class EEGReader {
                         try {
                             patient = personService.findByInss(StringUtils.left(pathName, SIZE_INSS));
                             if(patient == null){
-                                LOGGER.error("PDF zonder INSS of zonder gekende INSS" + pathName);
+                                LOGGER.error("PDF zonder INSS of zonder gekende INSS: " + pathName);
                                 Files.copy(path, Paths.get(pathToError +"\\" + path.getFileName()), StandardCopyOption.REPLACE_EXISTING);
                             } else {
                                 Path toPath = Paths.get(pathToRead + backUpPdf(path));
