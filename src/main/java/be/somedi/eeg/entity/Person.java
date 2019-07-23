@@ -40,6 +40,10 @@ public class Person {
         return inss;
     }
 
+    public void setInss(String inss) {
+        this.inss = inss;
+    }
+
     public LocalDate getBirthDate() {
         return birthDate;
     }
